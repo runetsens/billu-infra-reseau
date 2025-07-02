@@ -1,3 +1,8 @@
+## 🗺️ Plan Réseau
+
+![Plan Réseau](docs/topologie.png)
+
+
 # Présentation du projet et son contexte
 
 Le projet se déroule au sein de la société BillU, une filiale du groupe international RemindMe, spécialisée dans le développement de logiciels, notamment dans le domaine de la facturation.  
@@ -162,24 +167,121 @@ Activation serveur AD, le problème a été résolu en utilisant la commande irm
 
 ## Semaine 10
 ### Étapes du projet
-### Choix Technique
-### Difficultés rencontrées et Solutions trouvées
-### Axe d'amélioration possible
+Mise en place d’un **serveur web Apache** hébergeant deux sites, dont un accessible uniquement depuis le réseau interne.
+Mise en place d’un **VPN site-à-site** entre BillU et une entreprise partenaire (**EcotechSolutions**), pour assurer une communication sécurisée entre les deux infrastructures.
+Début de l’intégration inter-domaine avec la **mise en place d’une relation de confiance Active Directory** ou une **fusion de domaine**.
 
+### Technique de choix
+Le **serveur Apache** a été choisi pour sa robustesse, sa flexibilité et sa compatibilité avec de nombreux CMS et configurations. Il a été installé dans la **DMZ** pour simuler un service exposé.
+Le **VPN IPsec** a été retenu pour établir la liaison sécurisée inter-sites, permettant une communication chiffrée et stable entre les réseaux distants.
+Concernant l’AD, une **relation de confiance** était envisagée pour permettre aux techniciens IT de chaque entreprise de se connecter à l’AD distant sans double authentification.
+
+### Difficultés rencontrées et Solutions trouvées
+Quelques **problèmes de routage et de DNS** entre les deux réseaux ont été résolus par des ajustements dans les **routes statiques** et les **règles pfSense**.
+La **relation de confiance AD** n’a pas été finalisée, principalement en raison de contraintes de temps et de configuration réseau inter-domaines (zones DNS, latence, etc.).
+
+### Axe d'amélioration possible
+Finaliser la **relation de confiance AD** ou la **fusion de domaine**, et rédiger une **procédure claire d’accès distant sécurisé** pour les administrateurs externes.  
+Ajouter un **monitoring des flux VPN** pour détecter d’éventuelles interruptions.
 
 
 ## Semaine 11
 ### Étapes du projet
-### Choix Technique
+Mise en place d’un **serveur FTP sécurisé** sous Debian, permettant les échanges de fichiers entre collaborateurs.
+Poursuite de la configuration avancée de **Zabbix**, avec **personnalisation des modèles de supervision**.
+Finalisation de la **séparation des services critiques** dans la DMZ.
+
+### Technique de choix
+- Le serveur FTP a été installé sous **vsftpd** (*Very Secure FTP Daemon*), connu pour sa **légèreté**, sa **sécurité** et sa **compatibilité** avec les clients FTP tels que **FileZilla**.
+- **Zabbix** a été enrichi avec des **modèles de supervision personnalisés** pour surveiller non seulement la disponibilité des services, mais aussi les **performances applicatives** (CPU, RAM, disques, état des backups, etc.).
+
 ### Difficultés rencontrées et Solutions trouvées
+- Des **erreurs de configuration FTP** liées aux permissions ont été résolues en affinant les droits utilisateur et en configurant correctement le **mode passif**.
+- L’installation des **agents Zabbix sur clients Windows** a nécessité des **ajustements GPO et pare-feu**.
+
+### Axe d'amélioration possible
+Sécuriser davantage le **serveur FTP** en **activant TLS**, **restreindre les IP** autorisées à se connecter, et **mettre en place un journal d’accès**.  
+Poursuivre la **création de dashboards Zabbix orientés métier**.
 
 
 ## Semaine 12
 ### Étapes du projet
-### Choix Technique
+- Réalisation de la **recette fonctionnelle** avec des scénarios utilisateurs simulés : ouverture de session, génération de ticket, appel VoIP, etc.
+- Lancement de **tests de restauration de sauvegardes Veeam**.
+- **Documentation finale** du projet et **réorganisation du dépôt GitHub**.
+- Réalisation d’une **rétrospective d’équipe**, synthèse des difficultés, apprentissages et points à améliorer.
+
+### Technique de choix
+- Des **scripts de tests** ont été utilisés pour simuler des actions utilisateurs sur les postes client.
+- **Veeam** a été utilisé pour restaurer une **VM (AD ou GLPI)** en mode **image complète**.
+- Le dépôt GitHub a été **structuré par semaine**, avec des `README.md` explicatifs et des liens vers les scripts ou captures.
+
 ### Difficultés rencontrées et Solutions trouvées
+- Certains **scénarios de test ont échoué** temporairement en raison de **GPO mal appliquées** ; cela a été corrigé par `gpupdate /force` et vérification des OU.
+- Le **temps de documentation** a été sous-estimé, nécessitant un **effort d’équipe coordonné** en dernière semaine.
+
+### Axe d'amélioration possible
+Automatiser les **tests de validation** (via Ansible ou PowerShell), prévoir une **période dédiée à la documentation** dès la mi-projet, et intégrer une **surveillance des sauvegardes/restaurations** en continu.
+
 
 ## CONCLUSION
-### Axe d'amélioration possible
 
-# Conclusion
+Le projet **BILLU** s’inscrit dans une démarche réaliste de conception et de déploiement d’une infrastructure système et réseau complète, virtualisée, sécurisée et documentée, comme on en trouve dans les entreprises modernes.
+
+###  Objectif initial
+
+Créer une infrastructure multi-services sur un environnement **Proxmox**, avec :
+- des **réseaux logiques séparés** (DMZ, LAN),
+- un **Active Directory** centralisé avec des politiques précises,
+- des **services métiers** (ticketing, messagerie, supervision, VOIP…),
+- une **sécurité maîtrisée** (pare-feu, VPN, télémétrie, LAPS, sauvegarde),
+- une **automatisation via scripts** (PowerShell, Bash, CSV),
+- une **collaboration inter-entreprises** (VPN site-à-site, relation de confiance AD),
+- et une **documentation professionnelle**.
+
+###  Ce que nous avons accompli
+
+Au fil de 12 semaines de travail en équipe, nous avons :
+
+ **Planifié et structuré** le projet (nomenclature, organigramme, plan IP, rôles par sprint).  
+ Déployé une **infrastructure virtualisée complète sur Proxmox**.  
+ Mis en place 3 **contrôleurs de domaine Windows Server** (GUI + Core) et organisé les **rôles FSMO**.  
+ Automatisé la **création des OU, utilisateurs, groupes et GPO** via scripts CSV et PowerShell.  
+ Intégré des postes Windows et Linux (Debian) dans le domaine AD.  
+ Configuré un **serveur DHCP** distribuant des IP selon les départements.  
+ Déployé des **GPO avancées** : mot de passe, blocages, redirections, fond d’écran, mappage de lecteurs, etc.  
+ Installé un **pare-feu pfSense**, structuré autour d’une **matrice de flux rigoureuse** (DMZ / LAN / WAN).  
+ Mis en place des **services essentiels** :  
+- GLPI (gestion de parc, tickets),  
+- Zabbix (supervision réseau),  
+- iRedMail (serveur de messagerie),  
+- FreePBX + 3CX (téléphonie VoIP),  
+- WSUS (mises à jour Windows),  
+- Apache (serveur web interne),  
+- vsftpd (serveur FTP),  
+- Veeam (sauvegardes),  
+- LAPS (gestion de mot de passe local admin).  
+ Déployé une **infrastructure multi-site** :  
+- **VPN site-à-site** entre BillU et une seconde entreprise,  
+- Étude d’une **relation de confiance AD** pour accès croisé sécurisé.  
+ Documenté l’ensemble des scripts, configurations, captures d’écrans et procédures techniques.
+
+###  Limites et pistes d'amélioration
+
+Bien que la majorité des objectifs aient été atteints, quelques éléments restent à consolider ou finaliser :
+
+- Certains **tests de montée en charge**, **recettes utilisateurs**, ou scénarios de **restauration Veeam** n’ont pas été formalisés.
+- Une **structuration finale du dépôt GitHub par semaine** (avec les README de S1 à S12) permettra une lecture encore plus fluide.
+
+###  Bilan
+
+Ce projet démontre notre capacité à concevoir une **infrastructure complète de type PME/ETI**, en mobilisant des compétences pluridisciplinaires :  
+**réseau, système Windows/Linux, sécurité, scripting, documentation et gestion de projet Agile.**
+
+Il constitue une base robuste pour évoluer vers :
+- des **environnements hybrides ou full cloud (Azure, AWS)**,
+- des **infrastructures HA (haute disponibilité)**,
+- ou une **approche DevOps avec CI/CD et IaC (Terraform, Ansible)**.
+
+**BILLU** est plus qu’un exercice scolaire : c’est un projet **réaliste**, **cohérent**, **collaboratif** et **opérationnel**.
+

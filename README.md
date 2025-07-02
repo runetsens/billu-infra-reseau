@@ -167,22 +167,62 @@ Activation serveur AD, le problème a été résolu en utilisant la commande irm
 
 ## Semaine 10
 ### Étapes du projet
-### Choix Technique
-### Difficultés rencontrées et Solutions trouvées
-### Axe d'amélioration possible
+Mise en place d’un **serveur web Apache** hébergeant deux sites, dont un accessible uniquement depuis le réseau interne.
+Mise en place d’un **VPN site-à-site** entre BillU et une entreprise partenaire (**EcotechSolutions**), pour assurer une communication sécurisée entre les deux infrastructures.
+Début de l’intégration inter-domaine avec la **mise en place d’une relation de confiance Active Directory** ou une **fusion de domaine**.
 
+### Technique de choix
+Le **serveur Apache** a été choisi pour sa robustesse, sa flexibilité et sa compatibilité avec de nombreux CMS et configurations. Il a été installé dans la **DMZ** pour simuler un service exposé.
+Le **VPN IPsec** a été retenu pour établir la liaison sécurisée inter-sites, permettant une communication chiffrée et stable entre les réseaux distants.
+Concernant l’AD, une **relation de confiance** était envisagée pour permettre aux techniciens IT de chaque entreprise de se connecter à l’AD distant sans double authentification.
+
+### Difficultés rencontrées et Solutions trouvées
+Quelques **problèmes de routage et de DNS** entre les deux réseaux ont été résolus par des ajustements dans les **routes statiques** et les **règles pfSense**.
+La **relation de confiance AD** n’a pas été finalisée, principalement en raison de contraintes de temps et de configuration réseau inter-domaines (zones DNS, latence, etc.).
+
+### Axe d'amélioration possible
+Finaliser la **relation de confiance AD** ou la **fusion de domaine**, et rédiger une **procédure claire d’accès distant sécurisé** pour les administrateurs externes.  
+Ajouter un **monitoring des flux VPN** pour détecter d’éventuelles interruptions.
 
 
 ## Semaine 11
 ### Étapes du projet
-### Choix Technique
+Mise en place d’un **serveur FTP sécurisé** sous Debian, permettant les échanges de fichiers entre collaborateurs.
+Poursuite de la configuration avancée de **Zabbix**, avec **personnalisation des modèles de supervision**.
+Finalisation de la **séparation des services critiques** dans la DMZ.
+
+### Technique de choix
+- Le serveur FTP a été installé sous **vsftpd** (*Very Secure FTP Daemon*), connu pour sa **légèreté**, sa **sécurité** et sa **compatibilité** avec les clients FTP tels que **FileZilla**.
+- **Zabbix** a été enrichi avec des **modèles de supervision personnalisés** pour surveiller non seulement la disponibilité des services, mais aussi les **performances applicatives** (CPU, RAM, disques, état des backups, etc.).
+
 ### Difficultés rencontrées et Solutions trouvées
+- Des **erreurs de configuration FTP** liées aux permissions ont été résolues en affinant les droits utilisateur et en configurant correctement le **mode passif**.
+- L’installation des **agents Zabbix sur clients Windows** a nécessité des **ajustements GPO et pare-feu**.
+
+### Axe d'amélioration possible
+Sécuriser davantage le **serveur FTP** en **activant TLS**, **restreindre les IP** autorisées à se connecter, et **mettre en place un journal d’accès**.  
+Poursuivre la **création de dashboards Zabbix orientés métier**.
 
 
 ## Semaine 12
 ### Étapes du projet
-### Choix Technique
+- Réalisation de la **recette fonctionnelle** avec des scénarios utilisateurs simulés : ouverture de session, génération de ticket, appel VoIP, etc.
+- Lancement de **tests de restauration de sauvegardes Veeam**.
+- **Documentation finale** du projet et **réorganisation du dépôt GitHub**.
+- Réalisation d’une **rétrospective d’équipe**, synthèse des difficultés, apprentissages et points à améliorer.
+
+### Technique de choix
+- Des **scripts de tests** ont été utilisés pour simuler des actions utilisateurs sur les postes client.
+- **Veeam** a été utilisé pour restaurer une **VM (AD ou GLPI)** en mode **image complète**.
+- Le dépôt GitHub a été **structuré par semaine**, avec des `README.md` explicatifs et des liens vers les scripts ou captures.
+
 ### Difficultés rencontrées et Solutions trouvées
+- Certains **scénarios de test ont échoué** temporairement en raison de **GPO mal appliquées** ; cela a été corrigé par `gpupdate /force` et vérification des OU.
+- Le **temps de documentation** a été sous-estimé, nécessitant un **effort d’équipe coordonné** en dernière semaine.
+
+### Axe d'amélioration possible
+Automatiser les **tests de validation** (via Ansible ou PowerShell), prévoir une **période dédiée à la documentation** dès la mi-projet, et intégrer une **surveillance des sauvegardes/restaurations** en continu.
+
 
 ## CONCLUSION
 

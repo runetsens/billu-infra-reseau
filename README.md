@@ -185,6 +185,64 @@ Activation serveur AD, le problème a été résolu en utilisant la commande irm
 ### Difficultés rencontrées et Solutions trouvées
 
 ## CONCLUSION
-### Axe d'amélioration possible
 
-# Conclusion
+Le projet **BILLU** s’inscrit dans une démarche réaliste de conception et de déploiement d’une infrastructure système et réseau complète, virtualisée, sécurisée et documentée, comme on en trouve dans les entreprises modernes.
+
+###  Objectif initial
+
+Créer une infrastructure multi-services sur un environnement **Proxmox**, avec :
+- des **réseaux logiques séparés** (DMZ, LAN),
+- un **Active Directory** centralisé avec des politiques précises,
+- des **services métiers** (ticketing, messagerie, supervision, VOIP…),
+- une **sécurité maîtrisée** (pare-feu, VPN, télémétrie, LAPS, sauvegarde),
+- une **automatisation via scripts** (PowerShell, Bash, CSV),
+- une **collaboration inter-entreprises** (VPN site-à-site, relation de confiance AD),
+- et une **documentation professionnelle**.
+
+###  Ce que nous avons accompli
+
+Au fil de 12 semaines de travail en équipe, nous avons :
+
+ **Planifié et structuré** le projet (nomenclature, organigramme, plan IP, rôles par sprint).  
+ Déployé une **infrastructure virtualisée complète sur Proxmox**.  
+ Mis en place 3 **contrôleurs de domaine Windows Server** (GUI + Core) et organisé les **rôles FSMO**.  
+ Automatisé la **création des OU, utilisateurs, groupes et GPO** via scripts CSV et PowerShell.  
+ Intégré des postes Windows et Linux (Debian) dans le domaine AD.  
+ Configuré un **serveur DHCP** distribuant des IP selon les départements.  
+ Déployé des **GPO avancées** : mot de passe, blocages, redirections, fond d’écran, mappage de lecteurs, etc.  
+ Installé un **pare-feu pfSense**, structuré autour d’une **matrice de flux rigoureuse** (DMZ / LAN / WAN).  
+ Mis en place des **services essentiels** :  
+- GLPI (gestion de parc, tickets),  
+- Zabbix (supervision réseau),  
+- iRedMail (serveur de messagerie),  
+- FreePBX + 3CX (téléphonie VoIP),  
+- WSUS (mises à jour Windows),  
+- Apache (serveur web interne),  
+- vsftpd (serveur FTP),  
+- Veeam (sauvegardes),  
+- LAPS (gestion de mot de passe local admin).  
+ Déployé une **infrastructure multi-site** :  
+- **VPN site-à-site** entre BillU et une seconde entreprise,  
+- Étude d’une **relation de confiance AD** pour accès croisé sécurisé.  
+ Documenté l’ensemble des scripts, configurations, captures d’écrans et procédures techniques.
+
+###  Limites et pistes d'amélioration
+
+Bien que la majorité des objectifs aient été atteints, quelques éléments restent à consolider ou finaliser :
+
+- Certains **tests de montée en charge**, **recettes utilisateurs**, ou scénarios de **restauration Veeam** n’ont pas été formalisés.
+- Une **structuration finale du dépôt GitHub par semaine** (avec les README de S1 à S12) permettra une lecture encore plus fluide.
+
+###  Bilan
+
+Ce projet démontre notre capacité à concevoir une **infrastructure complète de type PME/ETI**, en mobilisant des compétences pluridisciplinaires :  
+**réseau, système Windows/Linux, sécurité, scripting, documentation et gestion de projet Agile.**
+
+Il constitue une base robuste pour évoluer vers :
+- des **environnements hybrides ou full cloud (Azure, AWS)**,
+- des **infrastructures HA (haute disponibilité)**,
+- ou une **approche DevOps avec CI/CD et IaC (Terraform, Ansible)**.
+
+**BILLU** est plus qu’un exercice scolaire : c’est un projet **réaliste**, **cohérent**, **collaboratif** et **opérationnel**.
+
+
